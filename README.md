@@ -54,5 +54,5 @@ B --> C[Identificación de días, períodos, internación, continuidad, retencio
 C --> D[Obtención de BPC y montos cubiertos por BPS]
 D --> E[Cálculo del complemento]
 E --> F[Generación de recibos]
-E --> G[Generación de archivo bancario]
+E --> G[Generación de archivos bancarios]
 E --> H[Resumen final para la empresa]
