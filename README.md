@@ -8,6 +8,8 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 ## 🚀 Funcionalidades principales
 
 - Procesamiento automático de certificaciones médicas del mes.
+- Carga de Archivo brindado por la Empresa con los haberes fijos y variables de los ultimos 6 meses.
+- Procesamiento y calculo de haberes por funcionario certificado.
 - Evaluación de:
   - Cantidad de días certificados.
   - Continuación de certificaciones previas.
@@ -16,7 +18,6 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 - Cálculo automático según:
   - Valor vigente de la BPC.
   - Montos cubiertos por BPS.
-  - Haberes fijos, variables y promedios históricos.
 - Generación de:
   - Recibos por empleado.
   - Archivos bancarios para depósito.
@@ -26,9 +27,6 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 
 ## 🖥️ Capturas del sistema
 
-> *(Aquí irán las 5 imágenes que vas a subir)*  
-
-Te dejo el formato listo para completar:
 
 ### 📍 Formulario de certificación médica
 ![Formulario certificacion](img/creacion_certificacion_png)
@@ -51,10 +49,10 @@ Te dejo el formato listo para completar:
 
 ```mermaid
 flowchart TD
-A[Certificaciones creadas y cargadas en el sistema] --> B[Identificación de días y períodos]
-B --> C[Evaluación: internación, continuidad, retenciones]
+A[Certificaciones creadas y cargadas en el sistema] --> B[Carga de Archivo con Haberes Fijos y Variables]
+B --> C[Identificación de días, períodos, internación, continuidad, retenciones]
 C --> D[Obtención de BPC y montos cubiertos por BPS]
 D --> E[Cálculo del complemento]
 E --> F[Generación de recibos]
 E --> G[Generación de archivo bancario]
-F --> H[Resumen final para la empresa]
+E --> H[Resumen final para la empresa]
