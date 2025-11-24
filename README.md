@@ -29,19 +29,19 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 
 
 ### 📍 Formulario de certificación médica
-![Formulario certificacion](img/creacion_certificacion_png)
+![Formulario certificacion](creacion_certificacion_png)
 
 ### 📍 Certificacion generada y enviada al paciente
-![Certificacion generada](img/certificacion_creada_y_enviada.png)
+![Certificacion generada](certificacion_creada_y_enviada.png)
 
 ### 📍 Panel pre-liquidacion
-![Panel pre-liquidacion](img/panel_antes_liquidar.png)
+![Panel pre-liquidacion](panel_antes_liquidar.png)
 
 ### 📍 Recibo generado para el empleado
-![Recibo](img/recibo_subsidio.png)
+![Recibo](Recibo_subsidio.png)
 
 ### 📍 Listado de subsidios obtenidos
-![Listado de Subsidios obtenidos](img/listado_subsidios.png)
+![Listado de Subsidios obtenidos](listado_subsidios.png)
 
 ---
 
