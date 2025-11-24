@@ -28,13 +28,13 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 ## 🖥️ Capturas del sistema
 
 
-### 📍 Formulario de certificación médica
+### 📍 Formulario de creació de certificación médica
 ![Formulario certificacion](creacion_certificacion.png)
 
 ### 📍 Certificacion generada y enviada al paciente
 ![Certificacion generada](certificacion_creada_y_enviada.png)
 
-### 📍 Panel pre-liquidacion
+### 📍 Panel de liquidacion
 ![Panel pre-liquidacion](panel_antes_liquidar.png)
 
 ### 📍 Recibo generado para el empleado
