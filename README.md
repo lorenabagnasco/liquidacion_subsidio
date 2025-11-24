@@ -233,4 +233,76 @@ if ($cant_dias == $dias_bps) {
 - Asegura que la parte que la empresa debe cubrir (SEFMU) se calcule sobre la base correcta.
 
 ---
+✔ Bloque 5 — Generación de recibos y detalles finales
 
+Este bloque corresponde a la etapa final del proceso, donde el sistema:
+
+Crea el recibo PDF para cada funcionario.
+
+Inserta la información procesada (días cubiertos, días no cubiertos, subsidios, totales).
+
+Genera el detalle final para ser enviado al usuario o archivado dentro del sistema.
+
+A continuación se muestran únicamente los fragmentos más importantes del código, evitando incluir la función completa.
+
+📌 Fragmento destacado — Inicialización del PDF y estructura principal
+$pdf = new FPDF();
+$pdf->AddPage();
+$pdf->SetFont('Arial', 'B', 12);
+
+$pdf->Cell(0, 10, "Recibo Subsidio por Enfermedad", 0, 1, 'C');
+$pdf->Ln(5);
+
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(0, 8, "Funcionario: " . $usuario_nombre, 0, 1);
+$pdf->Cell(0, 8, "Cedula: " . $cedula, 0, 1);
+$pdf->Cell(0, 8, "Periodo: " . $periodo, 0, 1);
+$pdf->Ln(4);
+
+📌 Fragmento destacado — Tabla de días cubiertos y no cubiertos
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Cell(60, 8, "Concepto", 1);
+$pdf->Cell(40, 8, "Cantidad de Dias", 1);
+$pdf->Cell(40, 8, "Monto", 1);
+$pdf->Ln();
+
+$pdf->SetFont('Arial', '', 10);
+$pdf->Cell(60, 8, "Dias cubiertos (empresa)", 1);
+$pdf->Cell(40, 8, $dias_empresa, 1);
+$pdf->Cell(40, 8, "$" . number_format($monto_empresa, 2), 1);
+$pdf->Ln();
+
+$pdf->Cell(60, 8, "Dias subsidiados (BPS)", 1);
+$pdf->Cell(40, 8, $dias_bps, 1);
+$pdf->Cell(40, 8, "$" . number_format($monto_bps, 2), 1);
+$pdf->Ln();
+
+📌 Fragmento destacado — Montos finales
+$pdf->SetFont('Arial', 'B', 10);
+$pdf->Ln(5);
+$pdf->Cell(100, 8, "Total a cobrar:", 1);
+$pdf->Cell(40, 8, "$" . number_format($total, 2), 1);
+
+📌 Fragmento destacado — Salida del archivo
+$nombre_pdf = "recibo_" . $cedula . "_" . $periodo . ".pdf";
+$pdf->Output('F', "recibos/" . $nombre_pdf);
+
+📝 Explicación técnica resumida
+
+En esta etapa:
+
+Se genera un nuevo PDF empleando FPDF.
+
+Se insertan datos personales del funcionario y del período.
+
+Se arma una tabla clara que muestra:
+
+Días que paga la empresa
+
+Días subsidiados por BPS
+
+Montos correspondientes
+
+Se calcula el total final.
+
+El archivo se exporta a la carpeta configurada en el sistema.
