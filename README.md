@@ -290,7 +290,7 @@ $pdf->Cell($x,$y_text,number_format($liquido_a_cobrar,0,'.', ',').'.00');
 $nombre_pdf = "recibo_" . $cedula . "_" . $periodo . ".pdf";
 $pdf->Output('F', "recibos/" . $nombre_pdf);
 ```
-📝 Explicación técnica resumida
+📝 Explicación técnica 
 
 En esta etapa:
 
@@ -380,3 +380,40 @@ if(!empty($nombre_archivo) && file_exists($filePaths)){
     readfile($filePaths);
 }
 ```
+
+🧾 Explicación técnica del proceso
+
+La generación de archivos bancarios es una etapa clave del sistema, ya que permite automatizar el pago de los subsidios liquidados mediante la creación de archivos TXT con el formato exacto requerido por cada institución bancaria.
+
+En el caso de este banco en particular, el sistema realiza los siguientes pasos:
+
+Normalización del monto líquido
+El valor a depositar puede venir con punto o coma como separador decimal, dependiendo del servidor donde corra la aplicación.
+El sistema unifica este valor, separa la parte entera y decimal, y luego los concatena sin separador para cumplir con el formato del banco.
+
+Formateo del monto con longitud fija
+Los montos deben tener un largo exacto de 15 caracteres, completando con ceros a la izquierda cuando sea necesario.
+Este paso es indispensable para que el banco pueda procesar el archivo correctamente.
+
+Construcción de la línea bancaria
+Cada línea del archivo TXT incluye:
+
+La cuenta de la institución.
+
+Código fijo requerido por el banco.
+
+Mes y año de liquidación.
+
+Monto formateado a 15 dígitos.
+
+Indicadores bancarios.
+
+Número de cuenta del funcionario.
+
+Escritura del archivo
+Cada línea generada se escribe en un archivo .txt que luego es utilizado por la empresa para subir al sistema del banco y ejecutar los depósitos.
+
+Preparación para descarga
+Si el archivo fue generado correctamente, el sistema envía los encabezados necesarios para iniciar la descarga automática desde el navegador.
+
+Con este proceso completamente automatizado, la empresa evita errores humanos, acelera el proceso de pago y cumple con los formatos exigidos por las instituciones bancarias.
