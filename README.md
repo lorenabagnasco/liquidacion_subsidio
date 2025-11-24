@@ -37,8 +37,7 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 ### 📍 Panel de liquidacion
 ![Panel pre-liquidacion](panel_antes_liquidar.png)
 
-### 📍 Recibo generado para el empleado
-![Recibo](Recibo_subsidio.png)
+
 
 ### 📍 Listado de subsidios obtenidos
 ![Listado de Subsidios obtenidos](listado_subsidios.png)
@@ -242,8 +241,9 @@ Crea el recibo PDF para cada funcionario.
 Inserta la información procesada (días cubiertos, días no cubiertos, subsidios, totales).
 
 Genera el detalle final para ser enviado al usuario o archivado dentro del sistema.
+
+📌 Inicialización del PDF y estructura principal
 ```php
-📌 Fragmento destacado — Inicialización del PDF y estructura principal
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 12);
@@ -256,8 +256,10 @@ $pdf->Cell(0, 8, "Funcionario: " . $usuario_nombre, 0, 1);
 $pdf->Cell(0, 8, "Cedula: " . $cedula, 0, 1);
 $pdf->Cell(0, 8, "Periodo: " . $periodo, 0, 1);
 $pdf->Ln(4);
+``
+📌 Tabla de días cubiertos y no cubiertos
 
-📌 Fragmento destacado — Tabla de días cubiertos y no cubiertos
+```php
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Cell(60, 8, "Concepto", 1);
 $pdf->Cell(40, 8, "Cantidad de Dias", 1);
@@ -274,14 +276,16 @@ $pdf->Cell(60, 8, "Dias subsidiados (BPS)", 1);
 $pdf->Cell(40, 8, $dias_bps, 1);
 $pdf->Cell(40, 8, "$" . number_format($monto_bps, 2), 1);
 $pdf->Ln();
-
+```
 📌 Fragmento destacado — Montos finales
+```php
 $pdf->SetFont('Arial', 'B', 10);
 $pdf->Ln(5);
 $pdf->Cell(100, 8, "Total a cobrar:", 1);
 $pdf->Cell(40, 8, "$" . number_format($total, 2), 1);
-
+```
 📌 Fragmento destacado — Salida del archivo
+```php
 $nombre_pdf = "recibo_" . $cedula . "_" . $periodo . ".pdf";
 $pdf->Output('F', "recibos/" . $nombre_pdf);
 ```
@@ -304,3 +308,6 @@ Montos correspondientes
 Se calcula el total final.
 
 El archivo se exporta a la carpeta configurada en el sistema.
+
+### 📍 Recibo generado para el empleado
+![Recibo](Recibo_subsidio.png)
