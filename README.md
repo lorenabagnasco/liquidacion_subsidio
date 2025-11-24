@@ -152,5 +152,85 @@ if ($incio_licencia_actual == $inicio_que_debe_ser) {
 - Asegura que no se liquiden días de más o de menos en casos de certificaciones encadenadas.
 
 ---
+### 🧮 Distribución de días cubiertos por BPS entre períodos del mes
 
+En este sistema, las certificaciones médicas pueden abarcar dos períodos distintos dentro del mes (por ejemplo, fin de mes → comienzo del mes siguiente).  
+Por eso es necesario determinar cuántos días cubre BPS en cada uno de esos períodos:
+
+- **Primera inserción:** días del mes inicial  
+- **Segunda inserción:** días del mes final  
+
+El algoritmo compara:
+
+- `$cant_dias` → días totales certificados  
+- `$dias_bps` → días cubiertos por BPS  
+- `$can_numero` → días del primer mes  
+- `$can_numero_mes_final` → días del segundo mes  
+
+Según la diferencia entre los días totales y los días cubiertos por BPS, se aplican reglas para repartir los días correctamente.
+
+```php
+if ($cant_dias == $dias_bps) {
+    // Si BPS cubre todos los días, los días se distribuyen igual en ambos períodos
+    $dias_bps_primera_insersion = $can_numero;
+    $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+} else {
+
+    // Diferencia de 3 días entre total y días BPS
+    if ($cant_dias - $dias_bps == 3) {
+        if ($can_numero > 3) {
+            $dias_bps_primera_insersion = $can_numero - 3;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+        } else if ($can_numero == 3) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+        } else if ($can_numero == 2) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final - 1;
+
+        } else if ($can_numero == 1) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final - 2;
+        }
+
+    // Diferencia de 2 días
+    } else if ($cant_dias - $dias_bps == 2) {
+        if ($can_numero > 2) {
+            $dias_bps_primera_insersion = $can_numero - 2;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+        } else if ($can_numero == 2) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+        } else if ($can_numero == 1) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final - 1;
+        }
+
+    // Diferencia de 1 día
+    } else if ($cant_dias - $dias_bps == 1) {
+        if ($can_numero > 1) {
+            $dias_bps_primera_insersion = $can_numero - 1;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+
+        } else if ($can_numero == 1) {
+            $dias_bps_primera_insersion = 0;
+            $dias_bps_segunda_insersion = $can_numero_mes_final;
+        }
+    }
+}
+```
+
+#### ✔ ¿Qué resuelve este bloque?
+
+- Determina cómo **distribuir correctamente** los días subsidiados por BPS cuando una certificación **cruza de un mes a otro**.  
+- Se adapta a los casos donde la diferencia entre días totales y días BPS es de **1, 2 o 3 días**, según normativa.  
+- Calcula correctamente **cuántos días cubre BPS en cada período**, evitando inconsistencias en las liquidaciones.  
+- Asegura que la parte que la empresa debe cubrir (SEFMU) se calcule sobre la base correcta.
+
+---
 
