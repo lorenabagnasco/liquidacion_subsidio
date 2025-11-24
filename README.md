@@ -285,7 +285,7 @@ $y = $y  ;
 $pdf->SetXY($x, $y);
 $pdf->Cell($x,$y_text,number_format($liquido_a_cobrar,0,'.', ',').'.00');
 ```
-📌 Fragmento destacado — Salida del archivo
+📌 Salida del archivo
 ```php
 $nombre_pdf = "recibo_" . $cedula . "_" . $periodo . ".pdf";
 $pdf->Output('F', "recibos/" . $nombre_pdf);
