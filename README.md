@@ -46,7 +46,7 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 ---
 
 ## 🔧 Flujo general del proceso de liquidación
-
+mermaid
 
 flowchart TD
 A[Certificaciones creadas y cargadas en el sistema] --> B[Carga de Archivo con Haberes Fijos y Variables]
@@ -56,6 +56,7 @@ D --> E[Cálculo del complemento]
 E --> F[Generación de recibos]
 E --> G[Generación de archivos bancarios]
 E --> H[Resumen final para la empresa]
+
 
 
 🧩 📦 Bloque Técnico 1 — Cálculo del complemento según días cubiertos por BPS y la empresa
