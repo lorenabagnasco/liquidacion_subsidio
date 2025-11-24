@@ -29,7 +29,7 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 
 
 ### 📍 Formulario de certificación médica
-![Formulario certificacion](creacion_certificacion_png)
+![Formulario certificacion](creacion_certificacion.png)
 
 ### 📍 Certificacion generada y enviada al paciente
 ![Certificacion generada](certificacion_creada_y_enviada.png)
