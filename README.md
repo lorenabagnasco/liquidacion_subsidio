@@ -312,3 +312,71 @@ El archivo se exporta a la carpeta configurada en el sistema.
 
 ### 📍 Recibo generado para el empleado
 ![Recibo](Recibo_subsidio.png)
+
+
+
+✔  Generación de archivos bancarios (Scotiabank)
+
+Este bloque del sistema se encarga de:
+
+Formatear correctamente los montos (contemplando separadores diferentes según servidor).
+
+Estructurar cada línea con la máscara solicitada por Scotiabank.
+
+Completar con ceros a la izquierda hasta alcanzar el largo requerido por el banco.
+
+Escribir cada línea en el archivo TXT correspondiente.
+
+Preparar la descarga del archivo bancario generado.
+
+📌 Creacion de archivo txt para bancos
+```php
+foreach ($liquidaciones as $liqui){
+    $lineas='';
+    
+    // Normalizar el valor líquido (punto o coma)
+    $liquido = (string)$liqui['liquido'];
+    $liquido_dividido = explode(".", $liquido);
+    if (!isset($liquido_dividido[1])){
+        $liquido_dividido = explode(",", $liquido);
+    }
+    if (!isset($liquido_dividido[1])){
+        $liquido_dividido[1] = '00';
+    }
+    
+    // Unir entero + decimales sin separador
+    $liquido = $liquido_dividido[0].$liquido_dividido[1];
+    $largo = strlen($liquido);
+    $cerosextra = 15 - $largo;
+    $cifraconcero = '';
+    
+    // Completar con ceros hasta 15 caracteres
+    for ($i = 0; $i < $cerosextra; $i++) {
+        $cifraconcero .= '0';
+    }
+
+    // Construcción de la línea según formato 
+    $lineas = 
+        $cuenta.'           '.'UYJ0307'.$mes.$anio.
+        '                     '.$cifraconcero.$liquido.
+        '+00'.$liqui['cuenta'];
+
+    fwrite($bank, $lineas."\r\n");
+}
+
+fclose($bank);
+``` 
+📌 Descarga del archivo generado
+```php
+$filePathscotia = 'TXTLiquidaciones/'.$nombre_archivo;
+
+if(!empty($nombre_archivo) && file_exists($filePaths)){
+    header("Cache-Control: public");
+    header("Content-Description: File Transfer");
+    header("Content-Disposition: attachment; filename=$nombre_archivo");
+    header("Content-Type: application/zip");
+    header("Content-Transfer-Encoding: binary");
+
+    readfile($filePaths);
+}
+```
