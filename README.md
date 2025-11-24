@@ -242,7 +242,7 @@ Crea el recibo PDF para cada funcionario.
 Inserta la información procesada (días cubiertos, días no cubiertos, subsidios, totales).
 
 Genera el detalle final para ser enviado al usuario o archivado dentro del sistema.
-
+```php
 📌 Fragmento destacado — Inicialización del PDF y estructura principal
 $pdf = new FPDF();
 $pdf->AddPage();
@@ -284,7 +284,7 @@ $pdf->Cell(40, 8, "$" . number_format($total, 2), 1);
 📌 Fragmento destacado — Salida del archivo
 $nombre_pdf = "recibo_" . $cedula . "_" . $periodo . ".pdf";
 $pdf->Output('F', "recibos/" . $nombre_pdf);
-
+```
 📝 Explicación técnica resumida
 
 En esta etapa:
