@@ -233,7 +233,7 @@ if ($cant_dias == $dias_bps) {
 - Asegura que la parte que la empresa debe cubrir (SEFMU) se calcule sobre la base correcta.
 
 ---
-✔ Bloque 5 — Generación de recibos y detalles finales
+✔ Generación de recibos y detalles finales
 
 Este bloque corresponde a la etapa final del proceso, donde el sistema:
 
@@ -242,8 +242,6 @@ Crea el recibo PDF para cada funcionario.
 Inserta la información procesada (días cubiertos, días no cubiertos, subsidios, totales).
 
 Genera el detalle final para ser enviado al usuario o archivado dentro del sistema.
-
-A continuación se muestran únicamente los fragmentos más importantes del código, evitando incluir la función completa.
 
 📌 Fragmento destacado — Inicialización del PDF y estructura principal
 $pdf = new FPDF();
