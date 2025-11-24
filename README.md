@@ -251,38 +251,39 @@ $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, "Recibo Subsidio por Enfermedad", 0, 1, 'C');
 $pdf->Ln(5);
 
-$pdf->SetFont('Arial', '', 10);
-$pdf->Cell(0, 8, "Funcionario: " . $usuario_nombre, 0, 1);
-$pdf->Cell(0, 8, "Cedula: " . $cedula, 0, 1);
-$pdf->Cell(0, 8, "Periodo: " . $periodo, 0, 1);
-$pdf->Ln(4);
-``
-📌 Tabla de días cubiertos y no cubiertos
+$pdf->SetFont($default_font, '', 9);
+$pdf->Cell($x_ini, $y_text, utf8_decode("Funcionario:"));
+      
+$x = $x_ini+22;
+$pdf->SetXY($x, $y);
+$pdf->SetFont('Arial','',10);
+$pdf->Cell($x_ini, $y_text,utf8_decode($funcionario_nombre_completo));
+$pdf->SetFont($default_font, '', 9);
 
-```php
-$pdf->SetFont('Arial', 'B', 10);
-$pdf->Cell(60, 8, "Concepto", 1);
-$pdf->Cell(40, 8, "Cantidad de Dias", 1);
-$pdf->Cell(40, 8, "Monto", 1);
-$pdf->Ln();
-
-$pdf->SetFont('Arial', '', 10);
-$pdf->Cell(60, 8, "Dias cubiertos (empresa)", 1);
-$pdf->Cell(40, 8, $dias_empresa, 1);
-$pdf->Cell(40, 8, "$" . number_format($monto_empresa, 2), 1);
-$pdf->Ln();
-
-$pdf->Cell(60, 8, "Dias subsidiados (BPS)", 1);
-$pdf->Cell(40, 8, $dias_bps, 1);
-$pdf->Cell(40, 8, "$" . number_format($monto_bps, 2), 1);
-$pdf->Ln();
+$x = $x_ini;
+$y = $y + 4;
+$pdf->SetXY($x, $y);
+$pdf->Cell($x_ini, $y_text, utf8_decode("Nº Documento: ".$funcionario->getDocumento()));
 ```
-📌 Fragmento destacado — Montos finales
+📌 Periodo certificado y dias computados
+
 ```php
-$pdf->SetFont('Arial', 'B', 10);
-$pdf->Ln(5);
-$pdf->Cell(100, 8, "Total a cobrar:", 1);
-$pdf->Cell(40, 8, "$" . number_format($total, 2), 1);
+$pdf->Cell($x,$y_text,$subs_per['per_desde'].' al '. $subs_per['per_hasta']);
+				
+$computados = $subs_per['per_dias'] ;
+$descontados = $subs_per['per_dias_menos'];
+
+$x = $x+ 70 ;
+$pdf->SetXY($x, $y);
+$pdf->Cell($x,$y_text,'Computados = '.$computados.' Descontados = '.$descontados);
+```
+📌Montos finales
+```php
+$pdf->Cell($x,$y_text,'LIQUIDO A COBRAR');
+$x = $x_ini + 184;
+$y = $y  ;
+$pdf->SetXY($x, $y);
+$pdf->Cell($x,$y_text,number_format($liquido_a_cobrar,0,'.', ',').'.00');
 ```
 📌 Fragmento destacado — Salida del archivo
 ```php
