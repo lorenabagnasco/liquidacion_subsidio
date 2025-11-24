@@ -82,26 +82,26 @@ Diferencia que debe pagar la empresa luego de descontar lo que cubre BPS.
 
 Proporcional de aguinaldo.
 
-📌 Fragmento de código correspondiente
-$por_dia_bps = round(($sueldo_base['sueldo_bps']/30),2);
+📌  Cálculo del complemento SEFMU y monto cubierto por BPS
+
+```php
+$por_dia_bps = round(($sueldo_base['sueldo_bps'] / 30), 2);
 $liquidacion_bps = $por_dia_bps * $certPer['dias_bps'];
 
 $liquidacion_sefmu = 0;
 
-$por_dia = ($sueldo_base['sueldo_sefmu'] / 30 );
-
-// La empresa paga solo los días que le corresponden (restando los primeros dos días).
+$por_dia = ($sueldo_base['sueldo_sefmu'] / 30);
 $liquidacion_sefmu = $por_dia * ($certPer['periodo_cant_dias'] - $certPer['dias_menos']);
 
 $nominal = $liquidacion_sefmu;
+$liquido_a_pagar_sefmu = $liquidacion_sefmu - $liquidacion_bps;
 
-// El líquido a pagar es lo que corresponde menos lo cubierto por BPS.
-$liquido_a_pagar_sefmu =  $liquidacion_sefmu - $liquidacion_bps;
-
-// Aguinaldo proporcional
+// Calcular el aguinaldo
 $liquido_sefmu_sin_a = $liquido_a_pagar_sefmu;
 $aguinaldo = $liquido_sefmu_sin_a / 12;
+
 $liquido_a_pagar_sefmu = $liquido_sefmu_sin_a + $aguinaldo;
+```
 
 📌 Resumen del cálculo
 
