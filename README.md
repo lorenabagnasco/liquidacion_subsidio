@@ -59,7 +59,7 @@ E --> H[Resumen final para la empresa]
 ```
 
 
-🧩 📦 Bloque Técnico 1 — Cálculo del complemento según días cubiertos por BPS y la empresa
+🧩 Cálculo del complemento según días cubiertos por BPS y la empresa
 
 Esta sección del sistema calcula cuánto corresponde pagar por cada certificación, considerando los días cubiertos por BPS, los que cubre la empresa y los días no pagos según la normativa.
 
@@ -114,3 +114,43 @@ $liquido_a_pagar_sefmu = $liquido_sefmu_sin_a + $aguinaldo;
 ✔ Se agrega concepto de aguinaldo proporcional.
 
 ✔ Resultado final listo para recibo y archivo bancario.
+
+
+### 🧩 Detección de certificaciones continuadas
+
+En este paso, el sistema verifica si la certificación actual **continúa inmediatamente** de la certificación anterior del mismo empleado.  
+Esto es importante porque afecta el cálculo total de días certificados y también determina la cantidad de días **no cubiertos** por la empresa (que comienza a pagar recién a partir del día 3, valor obtenido desde una tabla configurada).
+
+```php
+$fin_licencia_anterior = $cert_de_funcionario[$i-1]['fin_licencia'];
+$incio_licencia_actual = $certificacion['inicio_licencia'];
+
+// El inicio esperado es el día siguiente al fin de la licencia anterior
+$inicio_que_debe_ser = date("Y-m-d", strtotime($fin_licencia_anterior . "+ 1 days"));
+
+if ($incio_licencia_actual == $inicio_que_debe_ser) {
+    /**
+     * Si el fin de la licencia anterior es exactamente
+     * el día previo al inicio de la licencia actual,
+     * entonces la certificación se considera continuada.
+     */
+    $continua_licencia = 1;
+} else {
+    /**
+     * Si no, se trata de una certificación independiente.
+     */
+    $continua_licencia = 0;
+}
+```
+
+#### ✔ ¿Qué resuelve este bloque?
+- Detecta si la certificación **es continuación** de otra previa.  
+- Permite unir correctamente los días para el cálculo del subsidio.  
+- Determina cuántos días deben descontarse según la regla interna:  
+  **la empresa comienza a cubrir a partir del día 3**,  
+  obtenido desde la tabla de parámetros (`dias_menos`).  
+- Asegura que no se liquiden días de más o de menos en casos de certificaciones encadenadas.
+
+---
+
+
