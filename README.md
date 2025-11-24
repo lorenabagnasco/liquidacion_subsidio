@@ -47,7 +47,7 @@ El sistema centraliza las certificaciones, evalúa múltiples condiciones labora
 
 ## 🔧 Flujo general del proceso de liquidación
 
-```mermaid
+
 flowchart TD
 A[Certificaciones creadas y cargadas en el sistema] --> B[Carga de Archivo con Haberes Fijos y Variables]
 B --> C[Identificación de días, períodos, internación, continuidad, retenciones]
