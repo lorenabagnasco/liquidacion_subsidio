@@ -56,3 +56,60 @@ D --> E[Cálculo del complemento]
 E --> F[Generación de recibos]
 E --> G[Generación de archivos bancarios]
 E --> H[Resumen final para la empresa]
+
+
+🧩 📦 Bloque Técnico 1 — Cálculo del complemento según días cubiertos por BPS y la empresa
+
+Esta sección del sistema calcula cuánto corresponde pagar por cada certificación, considerando los días cubiertos por BPS, los que cubre la empresa y los días no pagos según la normativa.
+
+La empresa comienza a pagar a partir del tercer día certificado, por lo que los primeros dos días del período se restan automáticamente.
+Esta información ya está parametrizada y proviene de base de datos (campo dias_menos).
+
+📌 ¿Qué calcula este módulo?
+
+Valor diario de salario según BPS.
+
+Valor diario de salario según empresa.
+
+Días abonados por BPS.
+
+Días abonados por la empresa.
+
+Días no cubiertos (los primeros dos días).
+
+Diferencia que debe pagar la empresa luego de descontar lo que cubre BPS.
+
+Proporcional de aguinaldo.
+
+📌 Fragmento de código correspondiente
+$por_dia_bps = round(($sueldo_base['sueldo_bps']/30),2);
+$liquidacion_bps = $por_dia_bps * $certPer['dias_bps'];
+
+$liquidacion_sefmu = 0;
+
+$por_dia = ($sueldo_base['sueldo_sefmu'] / 30 );
+
+// La empresa paga solo los días que le corresponden (restando los primeros dos días).
+$liquidacion_sefmu = $por_dia * ($certPer['periodo_cant_dias'] - $certPer['dias_menos']);
+
+$nominal = $liquidacion_sefmu;
+
+// El líquido a pagar es lo que corresponde menos lo cubierto por BPS.
+$liquido_a_pagar_sefmu =  $liquidacion_sefmu - $liquidacion_bps;
+
+// Aguinaldo proporcional
+$liquido_sefmu_sin_a = $liquido_a_pagar_sefmu;
+$aguinaldo = $liquido_sefmu_sin_a / 12;
+$liquido_a_pagar_sefmu = $liquido_sefmu_sin_a + $aguinaldo;
+
+📌 Resumen del cálculo
+
+✔ Se identifica cuántos días paga BPS y cuántos paga la empresa.
+
+✔ Se descartan automáticamente los días no cubiertos (primeros 2).
+
+✔ Se calcula el complemento económico.
+
+✔ Se agrega concepto de aguinaldo proporcional.
+
+✔ Resultado final listo para recibo y archivo bancario.
